@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">All Companies</h2>
+            <p class="text-muted mb-0">{{ companies|length }} result(s)</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('main.admin_companies') }}" class="mb-4">
+        <div class="input-group shadow-sm" style="max-width:480px">
+            <input type="text" class="form-control" name="q" placeholder="Search by company name…" value="{{ q }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+            {% if q %}
+            <a href="{{ url_for('main.admin_companies') }}" class="btn btn-outline-secondary">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            {% if companies %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Company Name</th>
+                            <th>HR Contact</th>
+                            <th>Website</th>
+                            <th>Description</th>
+                            <th>Approval</th>
+                            <th>Account Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for company in companies %}
+                        <tr>
+                            <td class="ps-4 text-muted">{{ loop.index }}</td>
+                            <td class="fw-semibold">{{ company.name }}</td>
+                            <td>{{ company.hr_contact }}</td>
+                            <td>
+                                {% if company.website %}
+                                <a href="{{ company.website }}" target="_blank" class="text-primary small">
+                                    {{ company.website | truncate(25) }}</a>
+                                {% else %}<span class="text-muted">—</span>{% endif %}
+                            </td>
+                            <td class="small text-muted">
+                                {{ company.description | truncate(50) if company.description else '—' }}
+                            </td>
+                            <td>
+                                {% if company.approval_status == 'Approved' %}
+                                <span class="badge bg-success">Approved</span>
+                                {% elif company.approval_status == 'Pending' %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% else %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if company.user.status == 'Active' %}
+                                <span class="badge bg-success">Active</span>
+                                {% elif company.user.status == 'Blacklisted' %}
+                                <span class="badge bg-dark">Blacklisted</span>
+                                {% else %}
+                                <span class="badge bg-danger">Deactivated</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="d-flex gap-1 justify-content-end flex-wrap">
+                                    <!-- Approval actions -->
+                                    {% if company.approval_status == 'Pending' %}
+                                    <a href="{{ url_for('main.approve_company', company_id=company.id) }}"
+                                        class="btn btn-success btn-sm">Approve</a>
+                                    <a href="{{ url_for('main.reject_company', company_id=company.id) }}"
+                                        class="btn btn-danger btn-sm">Reject</a>
+                                    {% endif %}
+                                    <!-- Account status actions -->
+                                    {% if company.user.status != 'Blacklisted' %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=company.user_id, status='Blacklisted') }}"
+                                        class="btn btn-outline-dark btn-sm"
+                                        onclick="return confirm('Blacklist {{ company.name }}?')">Blacklist</a>
+                                    {% endif %}
+                                    {% if company.user.status == 'Active' %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=company.user_id, status='Rejected') }}"
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Deactivate {{ company.name }}?')">Deactivate</a>
+                                    {% else %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=company.user_id, status='Active') }}"
+                                        class="btn btn-outline-success btn-sm">Reactivate</a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center text-muted">
+                {% if q %}No companies found matching "<strong>{{ q }}</strong>".
+                {% else %}No companies registered yet.{% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

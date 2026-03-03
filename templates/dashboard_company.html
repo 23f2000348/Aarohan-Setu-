@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Company Dashboard</h2>
+            <p class="text-muted mb-0">Manage your recruitment drives</p>
+        </div>
+        <a href="{{ url_for('main.create_drive') }}" class="btn btn-primary d-flex align-items-center gap-2">
+            <span>Create New Drive</span>
+        </a>
+    </div>
+
+    <!-- Company Profile Card -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:60px;height:60px">
+                        <span class="fw-bold text-primary fs-4">{{ current_user.company_profile.name[0] | upper
+                            }}</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <h5 class="fw-bold mb-1">{{ current_user.company_profile.name }}</h5>
+                    <div class="d-flex flex-wrap gap-3 text-muted small">
+                        <span>📧 {{ current_user.company_profile.hr_contact }}</span>
+                        {% if current_user.company_profile.website %}
+                        <span>🌐 <a href="{{ current_user.company_profile.website }}" target="_blank"
+                                class="text-primary">
+                                {{ current_user.company_profile.website }}</a></span>
+                        {% endif %}
+                        {% if current_user.company_profile.description %}
+                        <span>📝 {{ current_user.company_profile.description | truncate(80) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    {% if current_user.company_profile.approval_status == 'Approved' %}
+                    <span class="badge bg-success px-3 py-2">✓ Approved</span>
+                    {% elif current_user.company_profile.approval_status == 'Pending' %}
+                    <span class="badge bg-warning text-dark px-3 py-2">⏳ Pending Approval</span>
+                    {% else %}
+                    <span class="badge bg-danger px-3 py-2">✗ Rejected</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drives Table -->
+    <div class="card shadow-md border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Your Placement Drives</h5>
+        </div>
+        <div class="card-body p-0">
+            {% if drives %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Job Title</th>
+                            <th>Status</th>
+                            <th>Applicants</th>
+                            <th>Deadline</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for drive in drives %}
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold">{{ drive.title }}</div>
+                                <small class="text-muted">{{ drive.job_description | truncate(50) }}</small>
+                            </td>
+                            <td>
+                                {% if drive.status == 'Approved' %}
+                                <span class="badge bg-success">Active</span>
+                                {% elif drive.status == 'Pending' %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif drive.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% elif drive.status == 'Closed' %}
+                                <span class="badge bg-secondary">Closed</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ drive.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">{{ drive.applications|length }}
+                                    Candidates</span>
+                            </td>
+                            <td>{{ drive.deadline.strftime('%d %b %Y') }}</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ url_for('main.view_applicants', drive_id=drive.id) }}"
+                                        class="btn btn-outline-primary">Applicants</a>
+                                    <a href="{{ url_for('main.edit_drive', drive_id=drive.id) }}"
+                                        class="btn btn-outline-secondary">Edit</a>
+                                    {% if drive.status != 'Closed' %}
+                                    <a href="{{ url_for('main.close_drive', drive_id=drive.id) }}"
+                                        class="btn btn-outline-warning"
+                                        onclick="return confirm('Close this drive?')">Close</a>
+                                    {% endif %}
+                                    <a href="{{ url_for('main.delete_drive', drive_id=drive.id) }}"
+                                        class="btn btn-outline-danger"
+                                        onclick="return confirm('Delete this drive permanently?')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center">
+                <div class="mb-3 text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-folder">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <h5>No Drives Created</h5>
+                <p class="text-muted">Get started by creating your first placement drive.</p>
+                <a href="{{ url_for('main.create_drive') }}" class="btn btn-primary mt-2">Create Drive</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
