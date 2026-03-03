@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">All Applications</h2>
+            <p class="text-muted mb-0">{{ applications|length }} application(s) total</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Student</th>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td class="ps-4 text-muted">{{ loop.index }}</td>
+                            <td>
+                                <div class="fw-semibold">{{ app.student.full_name }}</div>
+                                <small class="text-muted">{{ app.student.email }}</small>
+                            </td>
+                            <td>{{ app.job_position.title }}</td>
+                            <td>{{ app.job_position.company.name }}</td>
+                            <td class="small text-muted">{{ app.application_date.strftime('%d %b %Y') }}</td>
+                            <td>
+                                {% if app.status == 'Selected' %}
+                                <span class="badge bg-success">Selected</span>
+                                {% elif app.status == 'Shortlisted' %}
+                                <span class="badge bg-info">Shortlisted</span>
+                                {% elif app.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Applied</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center text-muted">No applications found.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
