@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">AarohanSetu</h1>
+    <p class="hero-subtitle">Bridging Talent with Opportunity. The official placement portal designed for the future of
+        recruitment.</p>
+
+    <div class="d-flex justify-content-center gap-3">
+        {% if not current_user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('main.register') }}" role="button">Get Started</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('main.login') }}" role="button">Sign In</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('main.dashboard') }}" role="button">Go to Dashboard</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row text-center mt-5 g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+            <div class="card-body">
+                <div class="mb-3 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-users">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <h3 class="h5 mb-3">For Students</h3>
+                <p class="text-muted">Build your profile, explore opportunities, and track your applications in
+                    real-time.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+            <div class="card-body">
+                <div class="mb-3 text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-briefcase">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                </div>
+                <h3 class="h5 mb-3">For Companies</h3>
+                <p class="text-muted">Reach top talent, manage placement drives, and streamline your hiring process.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+            <div class="card-body">
+                <div class="mb-3 text-accent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-shield">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <h3 class="h5 mb-3">Secure & Efficient</h3>
+                <p class="text-muted">A robust platform ensuring data integrity and a seamless experience for the
+                    institute.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
