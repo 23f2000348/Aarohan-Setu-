@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Student Dashboard</h2>
+            <p class="text-muted mb-0">Welcome back, {{ current_user.student_profile.full_name }}</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('main.student_history') }}" class="btn btn-outline-info">My History</a>
+            <a href="{{ url_for('main.update_profile') }}" class="btn btn-outline-secondary">Update Profile</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <h4 class="mb-3 fw-bold text-primary">Available Opportunities</h4>
+            {% if available_drives %}
+            <div class="row g-3">
+                {% for drive in available_drives %}
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 transition-hover">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title fw-bold mb-1">{{ drive.title }}</h5>
+                                    <h6 class="text-primary mb-2">{{ drive.company.name }}</h6>
+                                    <p class="card-text text-muted small mb-2">{{ drive.job_description | truncate(150)
+                                        }}</p>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <small class="text-muted"><i class="bi bi-calendar"></i> Deadline: {{
+                                            drive.deadline.strftime('%d %b %Y, %H:%M') }}</small>
+                                        <small class="text-muted">Min CGPA: Included</small>
+                                    </div>
+                                </div>
+                                <div>
+                                    {% if drive.id in applied_drive_ids %}
+                                    <button class="btn btn-secondary btn-sm" disabled>Applied</button>
+                                    {% else %}
+                                    <a href="{{ url_for('main.apply_drive', drive_id=drive.id) }}"
+                                        class="btn btn-primary btn-sm px-4">Apply</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info border-0 shadow-sm">No placement drives available at the moment. Check back
+                later!</div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <h4 class="mb-3 fw-bold text-primary">Your Applications</h4>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    {% if my_applications %}
+                    <ul class="list-group list-group-flush">
+                        {% for app in my_applications %}
+                        <li class="list-group-item p-3 border-0 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold">{{ app.job_position.company.name }}</span>
+                                {% if app.status == 'Selected' %}
+                                <span class="badge bg-success">Selected</span>
+                                {% elif app.status == 'Shortlisted' %}
+                                <span class="badge bg-info">Shortlisted</span>
+                                {% elif app.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Applied</span>
+                                {% endif %}
+                            </div>
+                            <div class="small text-muted">{{ app.job_position.title }}</div>
+                            <div class="small text-muted mt-1">Applied: {{ app.application_date.strftime('%d %b') }}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="p-4 text-center text-muted">No active applications.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

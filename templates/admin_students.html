@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">All Students</h2>
+            <p class="text-muted mb-0">{{ students|length }} result(s)</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('main.admin_students') }}" class="mb-4">
+        <div class="input-group shadow-sm" style="max-width:480px">
+            <input type="text" class="form-control" name="q" placeholder="Search by name, email, contact, or ID…"
+                value="{{ q }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+            {% if q %}
+            <a href="{{ url_for('main.admin_students') }}" class="btn btn-outline-secondary">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            {% if students %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>CGPA</th>
+                            <th>Resume</th>
+                            <th>Account Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td class="ps-4 text-muted">{{ student.user_id }}</td>
+                            <td class="fw-semibold">{{ student.full_name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.contact_number or '—' }}</td>
+                            <td>
+                                {% if student.cgpa %}
+                                <span class="badge bg-light text-dark border">{{ student.cgpa }}</span>
+                                {% else %}—{% endif %}
+                            </td>
+                            <td>
+                                {% if student.resume_link %}
+                                <a href="{{ student.resume_link }}" target="_blank"
+                                    class="btn btn-outline-primary btn-sm">View</a>
+                                {% else %}<span class="text-muted">—</span>{% endif %}
+                            </td>
+                            <td>
+                                {% if student.user.status == 'Active' %}
+                                <span class="badge bg-success">Active</span>
+                                {% elif student.user.status == 'Blacklisted' %}
+                                <span class="badge bg-dark">Blacklisted</span>
+                                {% else %}
+                                <span class="badge bg-danger">Deactivated</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm">
+                                    {% if student.user.status != 'Blacklisted' %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=student.user_id, status='Blacklisted') }}"
+                                        class="btn btn-outline-dark"
+                                        onclick="return confirm('Blacklist {{ student.full_name }}?')">Blacklist</a>
+                                    {% endif %}
+                                    {% if student.user.status == 'Active' %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=student.user_id, status='Rejected') }}"
+                                        class="btn btn-outline-danger"
+                                        onclick="return confirm('Deactivate {{ student.full_name }}?')">Deactivate</a>
+                                    {% else %}
+                                    <a href="{{ url_for('main.set_user_status', user_id=student.user_id, status='Active') }}"
+                                        class="btn btn-outline-success">Reactivate</a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center text-muted">
+                {% if q %}No students found matching "<strong>{{ q }}</strong>".
+                {% else %}No students registered yet.{% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">My Application History</h2>
+            <p class="text-muted mb-0">{{ applications|length }} application(s) total</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Salary Range</th>
+                            <th>Applied On</th>
+                            <th>Drive Status</th>
+                            <th>Application Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td class="ps-4 text-muted">{{ loop.index }}</td>
+                            <td class="fw-semibold">{{ app.job_position.company.name }}</td>
+                            <td>{{ app.job_position.title }}</td>
+                            <td class="small text-muted">{{ app.job_position.salary_range or '—' }}</td>
+                            <td class="small text-muted">{{ app.application_date.strftime('%d %b %Y') }}</td>
+                            <td>
+                                {% if app.job_position.status == 'Approved' %}
+                                <span class="badge bg-success">Active</span>
+                                {% elif app.job_position.status == 'Closed' %}
+                                <span class="badge bg-secondary">Closed</span>
+                                {% elif app.job_position.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.status == 'Selected' %}
+                                <span class="badge bg-success fs-6">🎉 Selected</span>
+                                {% elif app.status == 'Shortlisted' %}
+                                <span class="badge bg-info">Shortlisted</span>
+                                {% elif app.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Applied</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center text-muted">
+                <h5>No applications yet</h5>
+                <p>Visit the dashboard and apply for placement drives.</p>
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary mt-2">Browse Drives</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
