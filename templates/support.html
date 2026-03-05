@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">How can we help you?</h1>
+                <p class="text-muted">Browse our common questions or get in touch with our team.</p>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold">For Students</h5>
+                            <p class="card-text text-muted">Issues with registration, profile updates, or applying to
+                                drives?</p>
+                            <a href="mailto:student-support@aarohansetu.in" class="btn btn-outline-primary btn-sm">Email
+                                Student Support</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold">For Companies</h5>
+                            <p class="card-text text-muted">Need help posting jobs, managing applicants, or campus
+                                coordination?</p>
+                            <a href="mailto:corporate-relations@aarohansetu.in"
+                                class="btn btn-outline-primary btn-sm">Contact Corporate Relations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 bg-light p-4 rounded-3">
+                <h4 class="fw-bold mb-3">Frequently Asked Questions</h4>
+
+                <div class="accordion accordion-flush bg-transparent" id="accordionFAQ">
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                How do I reset my password?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                Currently, please contact the admin or support team to request a password reset. We are
+                                working on an automated reset feature.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                Can I update my resume after applying?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                No, once you apply for a drive, your profile snapshot at that time is sent to the
+                                company. Make sure your profile is up to date before applying.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                How long does company approval take?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                Company registrations are typically reviewed within 24-48 hours by the institute
+                                administration.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <p class="text-muted">Still need help?</p>
+                <a href="mailto:support@aarohansetu.in" class="btn btn-primary px-4">Contact Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
