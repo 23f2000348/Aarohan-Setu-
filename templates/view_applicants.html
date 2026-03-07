@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold fs-3">Applicants for <span class="text-primary">{{ drive.title }}</span></h2>
+            <p class="text-muted mb-0">Manage and shortlist candidates</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow-md border-0">
+        <div class="card-body p-0">
+            {% if drive.applications %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Student Name</th>
+                            <th>Academic Info</th>
+                            <th>Resume</th>
+                            <th>Current Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in drive.applications %}
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold">{{ app.student.full_name }}</div>
+                                <small class="text-muted">{{ app.student.email }}</small>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-medium">CGPA: {{ app.student.cgpa }}</span>
+                                    <small class="text-muted">{{ app.student.contact_number }}</small>
+                                </div>
+                            </td>
+                            <td>
+                                {% if app.student.resume_link %}
+                                <a href="{{ app.student.resume_link }}" target="_blank"
+                                    class="btn btn-light btn-sm border">
+                                    View Resume <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                </a>
+                                {% else %}
+                                <span class="text-muted small">Not Uploaded</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.status == 'Selected' %}
+                                <span class="badge bg-success">Selected</span>
+                                {% elif app.status == 'Shortlisted' %}
+                                <span class="badge bg-info">Shortlisted</span>
+                                {% elif app.status == 'Rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Applied</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url_for('main.update_application', app_id=app.id, status='Shortlisted') }}"
+                                        class="btn btn-outline-info btn-sm">Shortlist</a>
+                                    <a href="{{ url_for('main.update_application', app_id=app.id, status='Selected') }}"
+                                        class="btn btn-outline-success btn-sm">Select</a>
+                                    <a href="{{ url_for('main.update_application', app_id=app.id, status='Rejected') }}"
+                                        class="btn btn-outline-danger btn-sm">Reject</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center">
+                <p class="text-muted mb-0">No applications received yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

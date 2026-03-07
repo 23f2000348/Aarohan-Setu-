@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Placement History</h2>
+            <p class="text-muted mb-0">{{ placements|length }} student(s) placed</p>
+        </div>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            {% if placements %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>CGPA</th>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Salary Range</th>
+                            <th>Selected On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in placements %}
+                        <tr>
+                            <td class="ps-4 text-muted">{{ loop.index }}</td>
+                            <td class="fw-semibold">{{ app.student.full_name }}</td>
+                            <td class="small">{{ app.student.email }}</td>
+                            <td>
+                                {% if app.student.cgpa %}
+                                <span class="badge bg-light text-dark border">{{ app.student.cgpa }}</span>
+                                {% else %}—{% endif %}
+                            </td>
+                            <td>{{ app.job_position.company.name }}</td>
+                            <td>{{ app.job_position.title }}</td>
+                            <td class="small text-muted">{{ app.job_position.salary_range or '—' }}</td>
+                            <td class="small text-muted">{{ app.application_date.strftime('%d %b %Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="p-5 text-center text-muted">
+                No students have been placed yet.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
