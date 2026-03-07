@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">Join AarohanSetu</h2>
+            <p class="text-muted">Start your journey today</p>
+        </div>
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-white border-bottom-0 pb-0 pt-4">
+                <ul class="nav nav-pills nav-fill mb-3" id="roleTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill fw-bold" id="student-tab" data-bs-toggle="tab"
+                            data-bs-target="#student" type="button" role="tab">Student</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill fw-bold" id="company-tab" data-bs-toggle="tab"
+                            data-bs-target="#company" type="button" role="tab">Company</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body p-4">
+                <div class="tab-content" id="myTabContent">
+                    <!-- Student Registration Form -->
+                    <div class="tab-pane fade show active" id="student" role="tabpanel">
+                        <form method="POST" action="{{ url_for('main.register') }}">
+                            <input type="hidden" name="role" value="student">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" name="username" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="full_name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" name="full_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contact_number" class="form-label">Contact Number</label>
+                                    <input type="text" class="form-control" name="contact_number" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="cgpa" class="form-label">CGPA</label>
+                                    <input type="number" step="0.01" class="form-control" name="cgpa" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="resume_link" class="form-label">Resume Link (URL)</label>
+                                    <input type="text" class="form-control" name="resume_link"
+                                        placeholder="LinkedIn / Drive Link">
+                                </div>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Register as Student</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Company Registration Form -->
+                    <div class="tab-pane fade" id="company" role="tabpanel">
+                        <form method="POST" action="{{ url_for('main.register') }}">
+                            <input type="hidden" name="role" value="company">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" name="username" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="name" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="hr_contact" class="form-label">HR Contact</label>
+                                    <input type="text" class="form-control" name="hr_contact" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="website" class="form-label">Website</label>
+                                    <input type="text" class="form-control" name="website" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" name="description" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Register as Company</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light text-center py-3 border-0">
+                <small class="text-muted">Already have an account? <a href="{{ url_for('main.login') }}"
+                        class="fw-bold">Sign in</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
