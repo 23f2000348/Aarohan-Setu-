@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #0a0a0a;
+    --secondary-color: #171717;
+    --accent-color: #262626;
+    --background-color: #ffffff;
+    --surface-color: #ffffff;
+    --text-primary: #0a0a0a;
+    --text-secondary: #525252;
+    --border-color: #e5e5e5;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.01);
+    --shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Navbar - Floating Glass effect */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.2rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-secondary) !important;
+    margin-left: 1.5rem;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+/* Cards - Aesthetic Refresh */
+.card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px) scale(1.005);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Buttons - Modern Pill Shape */
+.btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    /* Pill shape */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    border-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-secondary {
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f5f5f5;
+    border-color: #d4d4d4;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Form Controls - Clean & Minimal */
+.form-control {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Stagger animations for lists */
+.list-group-item {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.list-group-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.list-group-item:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.list-group-item:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+/* ... add more if needed */
+
+/* Hero Section - Bold & Clean */
+.hero-section {
+    padding: 10rem 0 8rem;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, rgba(245, 245, 245, 1) 100%);
+}
+
+.hero-title {
+    font-size: 5rem;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, #000 0%, #333 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+    background-color: #fff;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.footer h5,
+.footer h6 {
+    color: var(--primary-color);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.footer a:hover {
+    color: var(--primary-color) !important;
+    text-decoration: underline;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 1em;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
