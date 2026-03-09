@@ -50,7 +50,7 @@ a {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Navbar - Floating Glass effect */
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(20px);
@@ -96,7 +96,7 @@ a {
     color: var(--primary-color) !important;
 }
 
-/* Cards - Aesthetic Refresh */
+
 .card {
     background: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -125,13 +125,12 @@ a {
     padding: 2rem;
 }
 
-/* Buttons - Modern Pill Shape */
+
 .btn {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 600;
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
-    /* Pill shape */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 0.95rem;
     letter-spacing: 0.01em;
@@ -163,7 +162,7 @@ a {
     transform: translateY(-2px);
 }
 
-/* Form Controls - Clean & Minimal */
+
 .form-control {
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
@@ -187,7 +186,7 @@ a {
     color: var(--text-secondary);
 }
 
-/* Animations */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -204,7 +203,7 @@ a {
     animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Stagger animations for lists */
+
 .list-group-item {
     animation: fadeInUp 0.5s ease-out forwards;
     opacity: 0;
@@ -222,9 +221,9 @@ a {
     animation-delay: 0.2s;
 }
 
-/* ... add more if needed */
 
-/* Hero Section - Bold & Clean */
+
+
 .hero-section {
     padding: 10rem 0 8rem;
     text-align: center;
@@ -251,7 +250,7 @@ a {
     line-height: 1.6;
 }
 
-/* Footer */
+
 .footer {
     background-color: #fff;
     border-top: 1px solid var(--border-color);
@@ -269,7 +268,7 @@ a {
     text-decoration: underline;
 }
 
-/* Badges */
+
 .badge {
     padding: 0.5em 1em;
     border-radius: 2rem;

@@ -9,7 +9,7 @@
         <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">← Back to Dashboard</a>
     </div>
 
-    <!-- Search Bar -->
+
     <form method="GET" action="{{ url_for('main.admin_companies') }}" class="mb-4">
         <div class="input-group shadow-sm" style="max-width:480px">
             <input type="text" class="form-control" name="q" placeholder="Search by company name…" value="{{ q }}">
@@ -72,14 +72,12 @@
                             </td>
                             <td class="text-end pe-4">
                                 <div class="d-flex gap-1 justify-content-end flex-wrap">
-                                    <!-- Approval actions -->
                                     {% if company.approval_status == 'Pending' %}
                                     <a href="{{ url_for('main.approve_company', company_id=company.id) }}"
                                         class="btn btn-success btn-sm">Approve</a>
                                     <a href="{{ url_for('main.reject_company', company_id=company.id) }}"
                                         class="btn btn-danger btn-sm">Reject</a>
                                     {% endif %}
-                                    <!-- Account status actions -->
                                     {% if company.user.status != 'Blacklisted' %}
                                     <a href="{{ url_for('main.set_user_status', user_id=company.user_id, status='Blacklisted') }}"
                                         class="btn btn-outline-dark btn-sm"

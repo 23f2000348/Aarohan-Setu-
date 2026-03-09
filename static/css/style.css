@@ -3,7 +3,6 @@
 :root {
     --primary-color: #000000;
     --secondary-color: #171717;
-    /* Very dark gray */
     --accent-color: #404040;
     --background-color: #ffffff;
     --surface-color: #ffffff;
@@ -11,7 +10,6 @@
     --text-secondary: #525252;
     --border-color: #e5e5e5;
     --success-color: #10b981;
-    /* Keep these for functional feedback */
     --danger-color: #ef4444;
     --warning-color: #f59e0b;
     --radius-md: 0.5rem;
@@ -53,7 +51,7 @@ a:hover {
     text-decoration-color: var(--primary-color);
 }
 
-/* Navbar */
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(12px);
@@ -83,7 +81,7 @@ a:hover {
     border-radius: var(--radius-md);
 }
 
-/* Cards */
+
 .card {
     background: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -111,7 +109,7 @@ a:hover {
     padding: 1.5rem;
 }
 
-/* Buttons */
+
 .btn {
     font-weight: 600;
     padding: 0.625rem 1.25rem;
@@ -145,7 +143,7 @@ a:hover {
     border-color: var(--primary-color);
 }
 
-/* Forms */
+
 .form-control {
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
@@ -167,7 +165,7 @@ a:hover {
     font-size: 0.9rem;
 }
 
-/* Utilities */
+
 .text-muted {
     color: var(--text-secondary) !important;
 }
@@ -181,7 +179,7 @@ a:hover {
     box-shadow: var(--shadow-lg);
 }
 
-/* Status Badges */
+
 .badge {
     padding: 0.4em 0.8em;
     border-radius: 4px;
@@ -223,7 +221,7 @@ a:hover {
     border-color: #e5e5e5;
 }
 
-/* Hero Section */
+
 .hero-section {
     padding: 8rem 0;
     text-align: center;
@@ -247,14 +245,14 @@ a:hover {
     font-weight: 400;
 }
 
-/* List Groups */
+
 .list-group-item {
     border: 1px solid var(--border-color);
     margin-bottom: 0.5rem;
     border-radius: var(--radius-md) !important;
 }
 
-/* Footer */
+
 .footer {
     background-color: #fafafa;
     border-top: 1px solid var(--border-color);
@@ -275,7 +273,7 @@ a:hover {
     color: var(--primary-color) !important;
 }
 
-/* Updated Navbar for B&W */
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.98) !important;
 }

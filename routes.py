@@ -67,7 +67,7 @@ def register():
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         user = User(username=username, password_hash=hashed_password, role=role, status='Active')
         db.session.add(user)
-        db.session.flush()  # get user.id
+        db.session.flush() 
 
         if role == 'student':
             full_name = request.form.get('full_name')
@@ -108,9 +108,9 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.home'))
 
-# ─────────────────────────────────────────────
+
 # Dashboard
-# ─────────────────────────────────────────────
+
 @main.route('/dashboard')
 @login_required
 def dashboard():
@@ -145,9 +145,9 @@ def dashboard():
     else:
         return redirect(url_for('main.home'))
 
-# ─────────────────────────────────────────────
+
 # Student Profile Update
-# ─────────────────────────────────────────────
+
 @main.route('/update_profile', methods=['GET', 'POST'])
 @login_required
 def update_profile():
@@ -176,9 +176,9 @@ def update_profile():
 
     return render_template('update_profile.html', student=student)
 
-# ─────────────────────────────────────────────
+
 # Admin: View All Students / Companies
-# ─────────────────────────────────────────────
+
 @main.route('/admin/students')
 @login_required
 def admin_students():
@@ -187,7 +187,6 @@ def admin_students():
         return redirect(url_for('main.home'))
     q = request.args.get('q', '').strip()
     if q:
-        # Search by name, contact, or student ID (user_id)
         students = Student.query.filter(
             db.or_(
                 Student.full_name.ilike(f'%{q}%'),
@@ -213,9 +212,9 @@ def admin_companies():
         companies = Company.query.all()
     return render_template('admin_companies.html', companies=companies, q=q)
 
-# ─────────────────────────────────────────────
+
 # Admin: View All Drives
-# ─────────────────────────────────────────────
+
 @main.route('/admin/drives')
 @login_required
 def admin_drives():
@@ -225,9 +224,9 @@ def admin_drives():
     drives = JobPosition.query.order_by(JobPosition.created_at.desc()).all()
     return render_template('admin_drives.html', drives=drives)
 
-# ─────────────────────────────────────────────
+
 # Admin: View All Applications
-# ─────────────────────────────────────────────
+
 @main.route('/admin/applications')
 @login_required
 def admin_all_applications():
@@ -237,9 +236,9 @@ def admin_all_applications():
     applications = Application.query.order_by(Application.application_date.desc()).all()
     return render_template('admin_applications.html', applications=applications)
 
-# ─────────────────────────────────────────────
+
 # Admin: Blacklist / Deactivate / Reactivate User
-# ─────────────────────────────────────────────
+
 @main.route('/admin/set_user_status/<int:user_id>/<string:status>')
 @login_required
 def set_user_status(user_id, status):
@@ -257,15 +256,14 @@ def set_user_status(user_id, status):
     db.session.commit()
     label = 'Blacklisted' if status == 'Blacklisted' else ('Deactivated' if status == 'Rejected' else 'Reactivated')
     flash(f'Account {label} successfully.', 'success')
-    # Redirect back to referrer (students or companies page)
     referrer = request.referrer
     if referrer:
         return redirect(referrer)
     return redirect(url_for('main.dashboard'))
 
-# ─────────────────────────────────────────────
+
 # Drive Approval / Rejection
-# ─────────────────────────────────────────────
+
 @main.route('/approve_drive/<int:drive_id>')
 @login_required
 def approve_drive(drive_id):
@@ -292,9 +290,9 @@ def reject_drive(drive_id):
     flash(f'Placement Drive "{drive.title}" has been rejected.', 'warning')
     return redirect(url_for('main.dashboard'))
 
-# ─────────────────────────────────────────────
+
 # Company Approval / Rejection
-# ─────────────────────────────────────────────
+
 @main.route('/approve_company/<int:company_id>')
 @login_required
 def approve_company(company_id):
@@ -321,9 +319,9 @@ def reject_company(company_id):
     flash(f'Company "{company.name}" has been rejected.', 'warning')
     return redirect(url_for('main.dashboard'))
 
-# ─────────────────────────────────────────────
+
 # Create Drive (Company)
-# ─────────────────────────────────────────────
+
 @main.route('/create_drive', methods=['GET', 'POST'])
 @login_required
 def create_drive():
@@ -365,9 +363,9 @@ def create_drive():
         
     return render_template('create_drive.html')
 
-# ─────────────────────────────────────────────
+
 # Apply for a Drive (Student)
-# ─────────────────────────────────────────────
+
 @main.route('/apply_drive/<int:drive_id>')
 @login_required
 def apply_drive(drive_id):
@@ -397,9 +395,9 @@ def apply_drive(drive_id):
     flash(f'Successfully applied for {drive.title} at {drive.company.name}!', 'success')
     return redirect(url_for('main.dashboard'))
 
-# ─────────────────────────────────────────────
+
 # View / Manage Applicants (Company)
-# ─────────────────────────────────────────────
+
 @main.route('/view_applicants/<int:drive_id>')
 @login_required
 def view_applicants(drive_id):
@@ -435,9 +433,9 @@ def update_application(app_id, status):
         
     return redirect(url_for('main.view_applicants', drive_id=application.job_position_id))
 
-# ─────────────────────────────────────────────
+
 # Edit / Delete / Close Drive  (Company)
-# ─────────────────────────────────────────────
+
 @main.route('/edit_drive/<int:drive_id>', methods=['GET', 'POST'])
 @login_required
 def edit_drive(drive_id):
@@ -462,7 +460,6 @@ def edit_drive(drive_id):
             except (ValueError, TypeError):
                 flash('Invalid date format.', 'danger')
                 return redirect(url_for('main.edit_drive', drive_id=drive_id))
-        # After editing, reset to Pending for re-approval
         drive.status = 'Pending'
         db.session.commit()
         flash('Drive updated successfully! It will need re-approval from admin.', 'success')
@@ -507,9 +504,9 @@ def close_drive(drive_id):
     return redirect(url_for('main.dashboard'))
 
 
-# ─────────────────────────────────────────────
+
 # Student: Placement History
-# ─────────────────────────────────────────────
+
 @main.route('/my_history')
 @login_required
 def student_history():
@@ -524,9 +521,9 @@ def student_history():
     return render_template('student_history.html', applications=all_applications)
 
 
-# ─────────────────────────────────────────────
+
 # Admin: Historical Placement Data
-# ─────────────────────────────────────────────
+
 @main.route('/admin/placements')
 @login_required
 def admin_placements():

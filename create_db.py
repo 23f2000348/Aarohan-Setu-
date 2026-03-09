@@ -7,11 +7,9 @@ app = create_app()
 
 def create_tables_and_seed():
     with app.app_context():
-        # Create all tables
         db.create_all()
         print(" All tables created successfully.")
 
-        # Seed predefined Admin (only once)
         existing_admin = User.query.filter_by(role='admin').first()
         if not existing_admin:
             hashed_password = generate_password_hash('admin123', method='pbkdf2:sha256')
@@ -22,7 +20,7 @@ def create_tables_and_seed():
                 status='Active'
             )
             db.session.add(admin_user)
-            db.session.flush()  # get admin_user.id before commit
+            db.session.flush()
 
             admin_profile = Admin(
                 user_id=admin_user.id,

@@ -1,4 +1,4 @@
-/* Footer */
+
 .footer {
     background-color: #fafafa;
     border-top: 1px solid var(--border-color);
@@ -19,7 +19,7 @@
     color: var(--primary-color) !important;
 }
 
-/* Updated Navbar for B&W */
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.98) !important;
 }
