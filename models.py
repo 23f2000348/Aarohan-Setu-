@@ -19,9 +19,9 @@ class User(db.Model, UserMixin):
     id            = db.Column(db.Integer, primary_key=True)
     username      = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
-    role          = db.Column(db.String(10), nullable=False)   # 'admin' | 'company' | 'student'
+    role          = db.Column(db.String(10), nullable=False)   
     status        = db.Column(db.String(20), default='Active', nullable=False)
-                                                                # 'Active' | 'Rejected' | 'Blacklisted'
+                                                                
     created_at    = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     admin_profile   = db.relationship('Admin',   backref='user', uselist=False, lazy=True,
@@ -59,7 +59,6 @@ class Company(db.Model):
     website         = db.Column(db.String(150), nullable=True)
     description     = db.Column(db.Text, nullable=True)
     approval_status = db.Column(db.String(20), default='Pending', nullable=False)
-                                # 'Pending' | 'Approved' | 'Rejected'
     created_at      = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     job_positions = db.relationship('JobPosition', backref='company', lazy=True,
@@ -106,7 +105,7 @@ class JobPosition(db.Model):
     eligibility_criteria = db.Column(db.Text, nullable=True)
     salary_range         = db.Column(db.String(100), nullable=True)
     deadline             = db.Column(db.DateTime, nullable=False)
-    status               = db.Column(db.String(20), default='Pending', nullable=False 
+    status               = db.Column(db.String(20), default='Pending', nullable=False) 
     created_at           = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 
